@@ -8,6 +8,9 @@
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.13.7",
+    "axios": "^0.26.0",
+    "google-maps-api-loader": "^1.1.1",
+    "pinia": "^2.0.11",
     "vue": "^3.2.31",
     "vue-axios": "^3.4.1",
     "vue-router": "^4.0.12"

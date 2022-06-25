@@ -7,13 +7,13 @@
       <p class="lineas__menu--cercanos">Autobuses cercanos</p>
       <div class="lineas__menu--info">
         <div>
-          <span>Linea, Persona</span>
+          <span>Linea, Persona, {{ parada }}</span>
         </div>
         <div>
-          <button class="lineas__menu--buttonGrid" v-on:click="showBuses()">
+          <button class="lineas__menu--buttonGrid">
             <img src="../assets/icon-grid.png" alt="" />
           </button>
-          <button class="lineas__menu--buttonList" v-on:click="showBuses()">
+          <button class="lineas__menu--buttonList">
             <img src="../assets/icon-list.png" alt="" />
           </button>
         </div>
@@ -25,10 +25,10 @@
         <span>Linea 220</span>
       </div>
       <div class="lineas__info--cards">
-        <div v-for="linea in lineas" :key="linea.id" :class="gridList">
+        <div v-for="linea in lineas" :key="linea.id" class="card-grid">
           <div class="card__info">
             <div class="card__info--linea">
-              <span>{{ linea.linea }}</span>
+              <span>{{ parada }}</span>
             </div>
             <div class="card__info--punto">
               <div class="card__info--punto--ubicacion">
@@ -59,73 +59,39 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
+  props: {
+    parada: {
+      type: String,
+      required: true,
+      //this.$route.params.parada,
+    },
+    lineas: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
+      paradaEnApi: null,
+      datosApi: null,
       state: false,
       gridList: false,
-      lineas: [
-        {
-          id: 0,
-          linea: '220',
-          lugar: 'Plaza Lima',
-          barrio: 'Hortaleza',
-          demora: '15',
-          distancia: '300',
-        },
-        {
-          id: 1,
-          linea: '221',
-          lugar: 'Plaza Lima',
-          barrio: 'Hortaleza',
-          demora: '16',
-          distancia: '310',
-        },
-        {
-          id: 2,
-          linea: '222',
-          lugar: 'Plaza Lima',
-          barrio: 'Hortaleza',
-          demora: '17',
-          distancia: '320',
-        },
-        {
-          id: 3,
-          linea: '230',
-          lugar: 'Plaza Lima',
-          barrio: 'Hortaleza',
-          demora: '18',
-          distancia: '330',
-        },
-        {
-          id: 4,
-          linea: '240',
-          lugar: 'Plaza Lima',
-          barrio: 'Hortaleza',
-          demora: '18',
-          distancia: '340',
-        },
-        {
-          id: 5,
-          linea: '250',
-          lugar: 'Plaza Lima',
-          barrio: 'Hortaleza',
-          demora: '19',
-          distancia: '350',
-        },
-      ],
     }
   },
-  computed: {
-    showBuses() {
-      if (this.gridList === false) {
-        this.gridList = !this.gridList
-        return 'card-list'
-      } else {
-        this.gridList = !this.gridList
-        return 'card-grid'
-      }
-    },
+  mounted() {
+    axios
+      .get(
+        'https://openapi.emtmadrid.es/v1/hello/',
+        //https://datos.crtm.es/datasets/crtm::datos-abiertos-elementos-de-la-red-de-autobuses-urbanos-de-madrid-emt/explore?layer=1&location=40.425887%2C-3.689482%2C12.61
+        //https://localhost:3000/server/rest/services/Hosted/<serviceName>/<serviceType>/<serviceLayer>/<operation>
+        //'https://services5.arcgis.com/UxADft6QPcvFyDU1/arcgis/rest/services/WebMapOOGG/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json'
+        //'https://services5.arcgis.com/UxADft6QPcvFyDU1/arcgis/rest/services/M6_Red/FeatureServer/1/query?where=1%3D1&outFields=IDPOSTE,CODIGOESTACION,CODIGOPOSTE,IDENTIFICATIVO,CODIGOTIPOPOSTE,X,Y,IDFESTACION&outSR=4326&f=json',
+      )
+      .then((response) => (this.datosApi = response))
+      .catch((error) => console.log(error))
   },
 }
 </script>

@@ -1,4 +1,11 @@
 <script setup>
+/*
+La vista Home tendrá dos partes 
+1. Hero con un Input para la búsqueda de líneas/paradas 
+2. Componente “Aluxioners”
+2.1 El componente aluxioners tendra las fotos, nombre y cargo de cada Aluxioner, las mismas serán clickeables, mostrando un modal con dos opciones a elegir, destino casa o destino trabajo, ambas redireccionará a la vista About, donde se mostrarán la parada cercana para dirigirse al lugar de destino seleccionado. Esta misma es enviada como parámetro desde el componente “Aluxioners”.
+
+*/
 import { RouterLink, RouterView } from 'vue-router'
 import Aluxioners from '@/components/Aluxioners.vue'
 </script>

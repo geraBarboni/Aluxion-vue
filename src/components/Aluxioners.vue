@@ -1,3 +1,10 @@
+<script setup>
+/*
+1. El componente mostrará los Aluxioners (foto, nombre y cargo), además cada uno tendrá asignado sus paradas, tanto de casa al trabajo como del trabajo a casa
+2. Al clickear sobre un Aluxioner, se mostrará un modal que tendrá el nombre del Aluxioner, y dos botones que envíe la parada correspondiente a tomar
+*/
+</script>
+
 <template>
   <div class="aluxioners">
     <div class="titles">
@@ -31,8 +38,22 @@
                 </p>
               </div>
               <div class="buttons">
-                <button class="button">casa</button>
-                <button class="button">trabajo</button>
+                <RouterLink
+                  :to="{
+                    path: `/about/${aluxioner.aluxionCasa}`,
+                    params: { parada: aluxioner.aluxionCasa },
+                  }"
+                >
+                  <button class="button">casa</button>
+                </RouterLink>
+                <RouterLink
+                  :to="{
+                    path: `/about/${aluxioner.casaAluxion}`,
+                    params: { parada: aluxioner.casaAluxion },
+                  }"
+                >
+                  <button class="button">trabajo</button>
+                </RouterLink>
               </div>
             </div>
           </div>
